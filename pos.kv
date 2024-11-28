@@ -1,0 +1,84 @@
+<POSApp>:
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    # Encabezado
+    Label:
+        text: "Punto de Venta"
+        font_size: "20sp"
+        bold: True
+        size_hint_y: None
+        height: "40dp"
+
+    # Formulario de entrada
+    GridLayout:
+        cols: 2
+        size_hint_y: None
+        height: "120dp"
+        spacing: 10
+
+        Label:
+            text: "Producto:"
+        TextInput:
+            id: product_input
+
+        Label:
+            text: "Cantidad:"
+        TextInput:
+            id: quantity_input
+            input_filter: 'int'
+
+        Label:
+            text: "Precio Unitario:"
+        TextInput:
+            id: price_input
+            input_filter: 'float'
+
+    # Botones de acciones
+    BoxLayout:
+        size_hint_y: None
+        height: "50dp"
+        spacing: 10
+
+        Button:
+            text: "Agregar al carrito"
+            on_press: root.add_to_cart(product_input.text, quantity_input.text, price_input.text)
+
+        Button:
+            text: "Vaciar carrito"
+            on_press: root.clear_cart()
+
+    # Lista del carrito
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Carrito de compras"
+            font_size: "16sp"
+            bold: True
+            size_hint_y: None
+            height: "30dp"
+
+        ScrollView:
+            size_hint_y: 1
+            GridLayout:
+                id: cart_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "30dp"
+                spacing: 5
+
+    # Total y finalización
+    BoxLayout:
+        size_hint_y: None
+        height: "50dp"
+        spacing: 10
+
+        Label:
+            text: f"Total: ${root.total}"
+            font_size: "18sp"
+
+        Button:
+            text: "Finalizar compra"
+            on_press: app.stop()
